@@ -1,4 +1,4 @@
-# 🥷 Ninja Registration - Spring Boot Project
+# 💻 Ninja Registration - Spring Boot Project
 
 Welcome to **Ninja Registration**, a Spring Boot project designed to showcase some core concepts of **Spring Framework** while having fun with the Naruto universe! 🌊🔥⚡
 
