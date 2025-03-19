@@ -2,7 +2,13 @@ package br.com.NinjaRegistration.NinjaRegistration.Missions;
 
 import br.com.NinjaRegistration.NinjaRegistration.Ninjas.NinjaModel;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
 @Table(name = "tb_missions")
 public class MissionsModel {
