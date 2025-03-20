@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -20,6 +22,6 @@ public class MissionsModel {
     private char rank;
 
     //Many Ninjas can have the same Mission
-    @OneToMany(mappedBy = "ninja")
-    private NinjaModel ninja;
+    @OneToMany(mappedBy = "missions")
+    private List<NinjaModel> ninja;
 }
