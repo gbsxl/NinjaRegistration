@@ -17,11 +17,17 @@ public class MissionsModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "rank")
     private char rank;
 
     //Many Ninjas can have the same Mission
     @OneToMany(mappedBy = "missions")
+    @Column(name = "missions")
     private List<NinjaModel> ninja;
 }
