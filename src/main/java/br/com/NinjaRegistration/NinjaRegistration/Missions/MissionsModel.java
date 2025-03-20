@@ -28,6 +28,5 @@ public class MissionsModel {
 
     //Many Ninjas can have the same Mission
     @OneToMany(mappedBy = "missions")
-    @Column(name = "missions")
     private List<NinjaModel> ninja;
 }

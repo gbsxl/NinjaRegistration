@@ -18,7 +18,7 @@ public class NinjaModel {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "age")
@@ -26,6 +26,6 @@ public class NinjaModel {
 
     //One Ninja haves a one Mission
     @ManyToOne
-    @JoinColumn(name = "mission_id") // Foreign Key
-    private MissionsModel mission;
+    @JoinColumn(name = "missions_id") // Foreign Key
+    private MissionsModel missions;
 }
