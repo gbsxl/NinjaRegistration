@@ -3,33 +3,34 @@ package br.com.NinjaRegistration.NinjaRegistration.Ninjas;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/ninja")
 public class NinjaController {
     //Add Ninja (CREATE)
-    @PostMapping("/create-ninja")
-    public String createNinja(){
+    @PostMapping("/create")
+    public String create(){
         return "created Ninja";
     }
 
     //Print all Ninjas (READ)
-    @GetMapping("/print-ninjas")
-    public String printAllNinjas(){
+    @GetMapping("/print-all")
+    public String printAll(){
         return "printed all Ninjas";
     }
 
     //Print Ninja by ID (READ)
-    @GetMapping("/print-ninja-by-id")
-    public String printNinjaByID(){
+    @GetMapping("/print-by-id")
+    public String printByID(){
         return "printed Ninja by id";
     }
 
     //Modify Ninja's Data (UPDATE)
-    @PutMapping("/modify-ninja-data-by-id")
-    public String modifyNinjaDataByID(){
+    @PutMapping("/update-by-id")
+    public String modifyDataByID(){
         return "modified ninja data by ID";
     }
     //Delete Ninja (DELETE)
-    @DeleteMapping("/delete-ninja-by-id")
-    public String deleteNinja(){
+    @DeleteMapping("/delete-by-id")
+    public String deleteByID(){
         return "ninja deleted";
     }
 }
