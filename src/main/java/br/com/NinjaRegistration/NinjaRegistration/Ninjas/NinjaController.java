@@ -2,9 +2,17 @@ package br.com.NinjaRegistration.NinjaRegistration.Ninjas;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/ninja")
 public class NinjaController {
+    NinjaService ninjaService;
+
+    public NinjaController(NinjaService ninjaService) {
+        this.ninjaService = ninjaService;
+    }
+
     //Add Ninja (CREATE)
     @PostMapping("/create")
     public String create(){
@@ -13,8 +21,8 @@ public class NinjaController {
 
     //Print all Ninjas (READ)
     @GetMapping("/print-all")
-    public String printAll(){
-        return "printed all Ninjas";
+    public List<NinjaModel> printAll(){
+        return ninjaService.printAll();
     }
 
     //Print Ninja by ID (READ)

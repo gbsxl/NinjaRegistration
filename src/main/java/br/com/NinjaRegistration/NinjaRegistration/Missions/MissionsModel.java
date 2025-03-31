@@ -1,6 +1,7 @@
 package br.com.NinjaRegistration.NinjaRegistration.Missions;
 
 import br.com.NinjaRegistration.NinjaRegistration.Ninjas.NinjaModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,9 +25,10 @@ public class MissionsModel {
     private String name;
 
     @Column(name = "rank")
-    private char rank;
+    private String rank;
 
     //Many Ninjas can have the same Mission
     @OneToMany(mappedBy = "missions")
+    @JsonIgnore
     private List<NinjaModel> ninja;
 }

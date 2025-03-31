@@ -26,6 +26,6 @@ public class NinjaModel {
 
     //One Ninja haves a one Mission
     @ManyToOne
-    @JoinColumn(name = "missions_id") // Foreign Key
+    @JoinColumn(name = "missions_id")// Foreign Key
     private MissionsModel missions;
 }
