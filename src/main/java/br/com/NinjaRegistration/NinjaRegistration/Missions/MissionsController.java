@@ -1,31 +1,48 @@
 package br.com.NinjaRegistration.NinjaRegistration.Missions;
 
+import br.com.NinjaRegistration.NinjaRegistration.Ninjas.NinjaModel;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 @RestController
 @RequestMapping("/missions")
 public class MissionsController {
-    //create Missions (CREATE)
-    @PostMapping("/create")
-    public String createMissions(){
-        return "created missions";
+    MissionsService missionsService;
+
+    public MissionsController(MissionsService missionsService) {
+        this.missionsService = missionsService;
     }
 
-    //Print Ninjas on the Mission by id (READ)
-    @GetMapping("/print-ninjas-by-id")
-    public String printNinjasByID(){
-        return "printed ninjas on the mission";
+    //create Missions (CREATE)
+    @PostMapping("/create")
+    public MissionsModel createMissions(@RequestBody MissionsModel missionsModel){
+        return missionsService.create(missionsModel);
+    }
+
+    @GetMapping("/print/all")
+    public List<MissionsModel> printAll(){
+        return missionsService.printAll();
+    }
+
+    @GetMapping("/print/{id}")
+    public MissionsModel printById(@PathVariable Long id){
+        return missionsService.printById(id);
+    }
+
+    @GetMapping("/print/{id}/ninjas")
+    public List<NinjaModel> printNinjas(@PathVariable Long id){
+        return missionsService.printNinjas(id);
     }
 
     //Modify mission by id (UPDATE)
-    @PutMapping("/update-by-id")
-    public String updateById(){
-        return "updated data mission by id";
+    @PutMapping("/update/{id}")
+    public MissionsModel update(@RequestBody MissionsModel missionsModel, @PathVariable Long id){
+        return missionsService.update(missionsModel, id);
     }
 
     //Delete missions by id (DELETE)
-    @DeleteMapping("/delete-by-id")
-    public String deleteByID(){
-        return "deleted mission by id";
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable Long id){
+        missionsService.delete(id);
     }
 }
