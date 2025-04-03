@@ -20,24 +20,25 @@ public class NinjaController {
     }
 
     //Print all Ninjas (READ)
-    @GetMapping("/print-all")
+    @GetMapping("/print/all")
     public List<NinjaModel> printAll(){
         return ninjaService.printAll();
     }
 
     //Print Ninja by ID (READ)
-    @GetMapping("/print-by-id")
-    public String printByID(){
-        return "printed Ninja by id";
+    @GetMapping("/print/{id}")
+    public NinjaModel printByID(@PathVariable Long id){
+        return ninjaService.printByID(id);
     }
 
     //Modify Ninja's Data (UPDATE)
-    @PutMapping("/update-by-id")
+    @PutMapping("/update/{id}")
     public String modifyDataByID(){
         return "modified ninja data by ID";
     }
+
     //Delete Ninja (DELETE)
-    @DeleteMapping("/delete-by-id")
+    @DeleteMapping("/delete/{id}")
     public String deleteByID(){
         return "ninja deleted";
     }
