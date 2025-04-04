@@ -9,31 +9,32 @@ import java.util.List;
 public class NinjaController {
     NinjaService ninjaService;
 
+
     public NinjaController(NinjaService ninjaService) {
         this.ninjaService = ninjaService;
     }
 
     //Add Ninja (CREATE)
     @PostMapping("/create")
-    public NinjaModel create(@RequestBody NinjaModel ninjaModel){
-        return ninjaService.createNinja(ninjaModel);
+    public NinjaDTO create(@RequestBody NinjaDTO ninjaDTO){
+        return ninjaService.createNinja(ninjaDTO);
     }
 
     //Print all Ninjas (READ)
     @GetMapping("/print/all")
-    public List<NinjaModel> printAll(){
+    public List<NinjaDTO> printAll(){
         return ninjaService.printAll();
     }
 
     //Print Ninja by ID (READ)
     @GetMapping("/print/{id}")
-    public NinjaModel printByID(@PathVariable Long id){
+    public NinjaDTO printByID(@PathVariable Long id){
         return ninjaService.printByID(id);
     }
 
     //Modify Ninja's Data (UPDATE)
     @PutMapping("/update/{id}")
-    public NinjaModel updateData(@PathVariable Long id, @RequestBody NinjaModel ninjaModel){
+    public NinjaDTO updateData(@PathVariable Long id, @RequestBody NinjaDTO ninjaModel){
         return ninjaService.updateData(ninjaModel, id);
     }
 

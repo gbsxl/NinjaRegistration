@@ -1,5 +1,6 @@
 package br.com.NinjaRegistration.NinjaRegistration.Missions;
 
+import br.com.NinjaRegistration.NinjaRegistration.Ninjas.NinjaDTO;
 import br.com.NinjaRegistration.NinjaRegistration.Ninjas.NinjaModel;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,29 +16,29 @@ public class MissionsController {
 
     //create Missions (CREATE)
     @PostMapping("/create")
-    public MissionsModel createMissions(@RequestBody MissionsModel missionsModel){
-        return missionsService.create(missionsModel);
+    public MissionsDTO createMissions(@RequestBody MissionsDTO missionsDTO){
+        return missionsService.create(missionsDTO);
     }
 
     @GetMapping("/print/all")
-    public List<MissionsModel> printAll(){
+    public List<MissionsDTO> printAll(){
         return missionsService.printAll();
     }
 
     @GetMapping("/print/{id}")
-    public MissionsModel printById(@PathVariable Long id){
+    public MissionsDTO printById(@PathVariable Long id){
         return missionsService.printById(id);
     }
 
     @GetMapping("/print/{id}/ninjas")
-    public List<NinjaModel> printNinjas(@PathVariable Long id){
+    public List<NinjaDTO> printNinjas(@PathVariable Long id){
         return missionsService.printNinjas(id);
     }
 
     //Modify mission by id (UPDATE)
     @PutMapping("/update/{id}")
-    public MissionsModel update(@RequestBody MissionsModel missionsModel, @PathVariable Long id){
-        return missionsService.update(missionsModel, id);
+    public MissionsDTO update(@RequestBody MissionsDTO missionsDTO, @PathVariable Long id){
+        return missionsService.update(missionsDTO, id);
     }
 
     //Delete missions by id (DELETE)

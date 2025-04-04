@@ -22,7 +22,10 @@ public class NinjaModel {
     private String email;
 
     @Column(name = "age")
-    private int age;
+    private Integer age;
+
+    @Column(name = "rank")
+    private String rank;
 
     //One Ninja haves a one Mission
     @ManyToOne
