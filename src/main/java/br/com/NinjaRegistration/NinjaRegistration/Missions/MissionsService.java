@@ -1,41 +1,58 @@
 package br.com.NinjaRegistration.NinjaRegistration.Missions;
 
+import br.com.NinjaRegistration.NinjaRegistration.Ninjas.NinjaDTO;
+import br.com.NinjaRegistration.NinjaRegistration.Ninjas.NinjaMapper;
 import br.com.NinjaRegistration.NinjaRegistration.Ninjas.NinjaModel;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 public class MissionsService {
-    MissionsRepository missionsRepository;
+    private MissionsRepository missionsRepository;
+    private MissionsMapper missionsMapper;
+    private NinjaMapper ninjaMapper;
 
-    public MissionsService(MissionsRepository missionsRepository) {
+    public MissionsService(MissionsRepository missionsRepository, MissionsMapper missionsMapper, NinjaMapper ninjaMapper) {
         this.missionsRepository = missionsRepository;
+        this.missionsMapper = missionsMapper;
+        this.ninjaMapper = ninjaMapper;
     }
 
-    public MissionsModel create(MissionsModel missionsModel) {
-        return missionsRepository.save(missionsModel);
+    public MissionsDTO create(MissionsDTO missionsDTO) {
+        MissionsModel missionsModel = missionsMapper.mapToModel(missionsDTO);
+        missionsModel = missionsRepository.save(missionsModel);
+        return missionsMapper.mapToDTO(missionsModel);
     }
 
-    public List<MissionsModel> printAll() {
-        return missionsRepository.findAll();
+    public List<MissionsDTO> printAll() {
+        List<MissionsModel> missions = missionsRepository.findAll();
+        return missions.stream()
+                .map(missionsMapper::mapToDTO)
+                .collect(Collectors.toList());
     }
 
-    public MissionsModel printById(Long id) {
+    public MissionsDTO printById(Long id) {
         Optional<MissionsModel> missionsModel = missionsRepository.findById(id);
-        return missionsModel.orElse(null);
+        return missionsModel.map(missionsMapper::mapToDTO).orElse(null);
     }
 
-    public List<NinjaModel> printNinjas(Long id){
-        return missionsRepository.findById(id).orElseThrow().getNinja();
+    public List<NinjaDTO> printNinjas(Long id){
+        List<NinjaModel> ninjas = missionsRepository.findById(id).orElseThrow().getNinja();
+        return ninjas.stream().map(ninjaMapper::map).collect(Collectors.toList());
     }
 
-    public MissionsModel update(MissionsModel missionsModel, Long id) {
-        Optional<MissionsModel> missionsModelAux = missionsRepository.findById(id);
-        if(missionsModelAux.equals(Optional.of(missionsModel))){
-            return missionsRepository.findById(id).orElse(null);
+    public MissionsDTO update(MissionsDTO missionsDTO, Long id) {
+        Optional<MissionsModel> base = missionsRepository.findById(id);
+        if(base.isPresent()){
+            MissionsModel original = base.get();
+            missionsMapper.updateFromDTO(missionsDTO, original);
+            original = missionsRepository.save(original);
+            return missionsMapper.mapToDTO(original);
         }
-        return missionsRepository.save(missionsModel);
+        return null;
     }
 
     public void delete(Long id) {
