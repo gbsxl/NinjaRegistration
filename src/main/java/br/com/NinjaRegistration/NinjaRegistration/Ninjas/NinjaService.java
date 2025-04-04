@@ -7,10 +7,12 @@ import java.util.Optional;
 
 @Service
 public class NinjaService {
-    NinjaRepository ninjaRepository;
+    private NinjaRepository ninjaRepository;
+    private NinjaMapper ninjaMapper;
 
-    public NinjaService(NinjaRepository ninjaRepository) {
+    public NinjaService(NinjaRepository ninjaRepository, NinjaMapper ninjaMapper) {
         this.ninjaRepository = ninjaRepository;
+        this.ninjaMapper = ninjaMapper;
     }
 
     public List<NinjaModel> printAll(){
@@ -22,8 +24,10 @@ public class NinjaService {
         return ninjaModel.orElse(null);
     }
 
-    public NinjaModel createNinja(NinjaModel ninjaModel){
-        return ninjaRepository.save(ninjaModel);
+    public NinjaDTO createNinja(NinjaDTO ninjaDTO){
+        NinjaModel ninjaModel = ninjaMapper.map(ninjaDTO); // map NinjaModel with DTO arguments
+        ninjaModel = ninjaRepository.save(ninjaModel); // Did a query POST using NinjaModel
+        return ninjaMapper.map(ninjaModel); // return map from NinjaModel to NinjaDTO
     }
 
     public void delete(Long id){

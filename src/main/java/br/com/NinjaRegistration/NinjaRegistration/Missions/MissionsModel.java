@@ -24,8 +24,8 @@ public class MissionsModel {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "rank")
-    private String rank;
+    @Column(name = "difficulty")
+    private String difficulty;
 
     //Many Ninjas can have the same Mission
     @OneToMany(mappedBy = "missions")
