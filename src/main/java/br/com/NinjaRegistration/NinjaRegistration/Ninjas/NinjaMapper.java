@@ -25,4 +25,14 @@ public class NinjaMapper {
         ninjaDTO.setMissions(ninjaModel.getMissions());
         return ninjaDTO;
     }
+
+    public void updateFromDto(NinjaDTO dto, NinjaModel model) {
+        if (dto.getAge() != null) model.setAge(dto.getAge());
+        if (dto.getName() != null) model.setName(dto.getName());
+        if (dto.getRank() != null) model.setRank(dto.getRank());
+        if (dto.getEmail() != null) model.setEmail(dto.getEmail());
+        if (dto.getMissions() != null) model.setMissions(dto.getMissions());
+    }
+
+
 }

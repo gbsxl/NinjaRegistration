@@ -1,6 +1,7 @@
 package br.com.NinjaRegistration.NinjaRegistration.Ninjas;
 
 import br.com.NinjaRegistration.NinjaRegistration.Missions.MissionsModel;
+import ch.qos.logback.core.model.INamedModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ public class NinjaDTO {
     private Long id;
     private String name;
     private String email;
-    private int age;
+    private Integer age;
     private String rank;
     private MissionsModel missions;
 }

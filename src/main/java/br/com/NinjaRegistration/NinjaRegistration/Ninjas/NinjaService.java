@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class NinjaService {
@@ -15,31 +16,36 @@ public class NinjaService {
         this.ninjaMapper = ninjaMapper;
     }
 
-    public List<NinjaModel> printAll(){
-        return ninjaRepository.findAll();
+    public List<NinjaDTO> printAll() {
+        List<NinjaModel> ninjaModel = ninjaRepository.findAll();
+        return ninjaModel.stream()
+                .map(ninjaMapper::map)
+                .collect(Collectors.toList());
     }
 
-    public NinjaModel printByID(Long id){
+    public NinjaDTO printByID(Long id) {
         Optional<NinjaModel> ninjaModel = ninjaRepository.findById(id);
-        return ninjaModel.orElse(null);
+        return ninjaModel.map(ninjaMapper::map).orElse(null);
     }
 
-    public NinjaDTO createNinja(NinjaDTO ninjaDTO){
+    public NinjaDTO createNinja(NinjaDTO ninjaDTO) {
         NinjaModel ninjaModel = ninjaMapper.map(ninjaDTO); // map NinjaModel with DTO arguments
         ninjaModel = ninjaRepository.save(ninjaModel); // Did a query POST using NinjaModel
         return ninjaMapper.map(ninjaModel); // return map from NinjaModel to NinjaDTO
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         ninjaRepository.deleteById(id);
     }
 
-    public NinjaModel updateData(NinjaModel ninjaModel, Long id){
-        Optional<NinjaModel> ninjaModelAux = ninjaRepository.findById(id);
-        if(ninjaModelAux.equals(Optional.of(ninjaModel))){
-            return ninjaRepository.findById(id).orElse(null);
+    public NinjaDTO updateData(NinjaDTO body, Long id) {
+        Optional<NinjaModel> base = ninjaRepository.findById(id);
+        if (base.isPresent()){
+            NinjaModel original = base.get();
+            ninjaMapper.updateFromDto(body, original);
+            NinjaModel updated = ninjaRepository.save(original);
+            return ninjaMapper.map(updated);
         }
-        return ninjaRepository.save(ninjaModel);
+        return null;
     }
-
 }
