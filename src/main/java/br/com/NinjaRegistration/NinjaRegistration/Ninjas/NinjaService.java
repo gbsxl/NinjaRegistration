@@ -35,7 +35,7 @@ public class NinjaService {
     }
 
     public void delete(Long id) {
-        if (ninjaRepository.findById(id).isPresent()) {
+        if (ninjaRepository.existsById(id)) {
             ninjaRepository.deleteById(id);
         }
     }

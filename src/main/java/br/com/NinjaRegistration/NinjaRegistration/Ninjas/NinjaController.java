@@ -1,5 +1,9 @@
 package br.com.NinjaRegistration.NinjaRegistration.Ninjas;
 
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +20,9 @@ public class NinjaController {
 
     //Add Ninja (CREATE)
     @PostMapping("/create")
-    public NinjaDTO create(@RequestBody NinjaDTO ninjaDTO){
-        return ninjaService.createNinja(ninjaDTO);
+    public ResponseEntity<?> create(@RequestBody NinjaDTO ninjaDTO){
+        ninjaService.createNinja(ninjaDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Ninja " + ninjaDTO.getName() + " created");
     }
 
     //Print all Ninjas (READ)
@@ -34,13 +39,25 @@ public class NinjaController {
 
     //Modify Ninja's Data (UPDATE)
     @PutMapping("/update/{id}")
-    public NinjaDTO updateData(@PathVariable Long id, @RequestBody NinjaDTO ninjaModel){
-        return ninjaService.updateData(ninjaModel, id);
+    public ResponseEntity<String> updateData(@PathVariable Long id, @RequestBody NinjaDTO ninjaDTO){
+        if(printByID(id) != null){
+            ninjaService.updateData(ninjaDTO, id);
+            return ResponseEntity.status(HttpStatus.OK).body("Ninja ID: " + id + " data updated");
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ninja ID: " + id + " was not found and also not updated");
+        }
     }
 
     //Delete Ninja (DELETE)
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id){
-        ninjaService.delete(id);
+    public ResponseEntity<String> delete(@PathVariable Long id){
+        if (ninjaService.printByID(id) != null) {
+            ninjaService.delete(id);
+            return ResponseEntity.noContent().build();
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Ninja id: " + id + " not found");
+        }
     }
 }
